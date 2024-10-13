@@ -1,0 +1,8 @@
+---
+- name: install
+  include_tasks: install.yml
+  when: hosts_setup == "full" or hosts_setup == "install"
+
+- name: configure
+  import_tasks: configure.yml
+  when: hosts_setup == "full" or hosts_setup == "configure"

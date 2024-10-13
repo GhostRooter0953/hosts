@@ -1,0 +1,6 @@
+---
+hosts_setup: full
+hosts_file: /etc/hosts
+hosts_add_default_ipv4: true
+hosts_add_basic_ipv6: true
+hosts_entries: []

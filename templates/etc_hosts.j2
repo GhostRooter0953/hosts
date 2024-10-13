@@ -1,0 +1,33 @@
+127.0.0.1 localhost.localdomain localhost
+{% if hosts_add_default_ipv4 %}
+{% if hosts_ourserver.fqdn is defined and hosts_ourserver.fqdn | length > 0
+   and hosts_ourserver.ipv4 is defined and hosts_ourserver.ipv4 | length > 0 %}
+{{ hosts_ourserver.ipv4 }} {{ ansible_hostname }} {{ hosts_ourserver.fqdn }}
+{% else %}
+{% if ansible_default_ipv4.address is defined and ansible_default_ipv4.address | length > 0 %}
+{{ ansible_default_ipv4.address }} {{ ansible_hostname }}
+{% endif %}
+{% endif %}
+{% endif %}
+{% if hosts_add_basic_ipv6 %}
+
+# The following lines are desirable for IPv6 capable hosts
+::1 localhost6.localdomain6 localhost6 ip6-localhost ip6-loopback
+{% if hosts_ourserver.fqdn is defined and hosts_ourserver.fqdn | length > 0
+   and hosts_ourserver.ipv6 is defined and hosts_ourserver.ipv6 | length > 0 %}
+{{ hosts_ourserver.ipv6 }} {{ ansible_hostname }} {{ hosts_ourserver.fqdn }}
+{% else %}
+{% if ansible_default_ipv6.address is defined and ansible_default_ipv6.address | length > 0 %}
+{{ ansible_default_ipv6.address }} {{ ansible_hostname }}
+{% endif %}
+{% endif %}
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+{% endif %}
+
+# Custom entries
+{% for entry in hosts_entries %}
+{{ entry }}
+{% endfor %}

@@ -1,0 +1,18 @@
+---
+- name: gather required facts
+  setup:
+    gather_subset: [network]
+  when: ansible_default_ipv4 is not defined
+
+- name: hostname changing
+  hostname:
+    name: "{{ hosts_ourserver.fqdn }}"
+  when: hosts_ourserver.fqdn is defined and hosts_ourserver.fqdn | length > 0
+
+- name: hosts file generation
+  template:
+    src: etc_hosts.j2
+    dest: "{{ hosts_file }}"
+    owner: root
+    group: root
+    mode: 0644
